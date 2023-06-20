@@ -1,8 +1,85 @@
-import { Box, Button, Card, CardBody, CardHeader, Flex, Grid, GridItem, Icon, Spacer, Stack, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Heading, Image, Spacer, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import { HeadingText } from "@/components/typography/Heading";
 import { ParagraphSecondary } from "@/components/typography/Paragraph";
 import { HeadingSpan } from "@/components/typography/headingSpan";
-import { BsChevronRight } from "react-icons/bs";
+
+const SingleCard = ({ title, description, image }: { title: string, description: string, image: string }) => {
+  return (
+    <Box
+      pos={'relative'}
+      maxH={{ base: '355px', lg: '743px' }} maxW={{ base: 'full', lg: '784px' }}
+    >
+      <Image
+        src={image}
+        alt={title}
+        rounded={'xl'}
+        objectFit={'cover'}
+        w={{ base: 'full', lg: '784px' }}
+        h={{ base: '355px', lg: '743px' }}
+      />
+      <Stack
+        w={'full'}
+        pos={'absolute'}
+        bottom={0}
+        left={0}
+        p={{ base: 4, lg: 10 }}
+        spacing={4}
+        background={'linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.8) 100%)'}
+        rounded={'xl'}
+      >
+        <Heading color={'white'}>
+          {title}
+        </Heading>
+        <ParagraphSecondary>
+          {description}
+        </ParagraphSecondary>
+      </Stack>
+    </Box>
+  )
+}
+
+const DoubleCard = ({ title, description, image }: { title: string, description: string, image: string }) => {
+  return (
+    <Box
+      pos={'relative'}
+      maxH={'355px'}
+      maxW={{ base: 'full', lg: '784px' }}
+    >
+      <Image
+        src={image}
+        alt={title}
+        rounded={'xl'}
+        objectFit={'cover'}
+        objectPosition={'center'}
+        w={{ base: 'full', lg: '784px' }}
+        h={'355px'}
+      />
+      <Stack
+        pos={'absolute'}
+        bottom={0}
+        left={0}
+        h={'355px'} w={'full'}
+        background={'linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.8) 100%)'}
+        rounded={'xl'}
+      >
+        <Stack
+          pos={'absolute'}
+          bottom={0}
+          w={'auto'}
+          p={{ base: 4, lg: 8 }}
+        >
+          <Heading color={'white'}>
+            {title}
+          </Heading>
+          <ParagraphSecondary>
+            {description}
+          </ParagraphSecondary>
+        </Stack>
+      </Stack>
+    </Box>
+  )
+}
+
 export default function SectionAbout() {
   return (
     <Flex
@@ -11,62 +88,54 @@ export default function SectionAbout() {
       w={'full'}
       py={{ base: 10, lg: 0 }}
     >
-      <Grid
-        gridTemplateColumns={'repeat(12, 1fr)'}
-        gap={5}
-        alignItems={'center'}
-      >
-        <GridItem
-          gridColumn={{
-            base: 'span 12',
-            lg: 'span 6'
-          }}
+      <Stack spacing={10} w={'full'}>
+        <Stack textAlign={{ base: 'start', md: 'center' }} align={{ base: 'start', md: 'center' }}>
+          <HeadingSpan title="HIGHTLIGHTED PORTOFOLIO" />
+          <HeadingText>
+            Searching for The Best? Sure, Here It Is!
+          </HeadingText>
+          <ParagraphSecondary w={{ base: 'full', md: '3xl' }}>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas, doloribus doloremque, odit, quisquam explicabo eos quasi laboriosam modi quam in et dolores? Accusamus fugit cum praesentium asperiores facere aspernatur enim.
+          </ParagraphSecondary>
+        </Stack>
+
+        <Grid
+          templateColumns={'repeat(2,1fr)'}
+          gap={8}
         >
-          <Stack
-            direction={'column'}
-            gap={2}
+          <GridItem
+            colSpan={{
+              base: 2,
+              lg: 1
+            }}
           >
-            <HeadingSpan title={'ABOUT ME'} />
-            <HeadingText>
-              I&apos;ve been developing websites since 2021
-            </HeadingText>
-            <ParagraphSecondary>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas, doloribus
-              doloremque, odit, quisquam explicabo eos quasi laboriosam modi quam in et dolores?
-              Accusamus fugit cum praesentium asperiores facere aspernatur enim.
-            </ParagraphSecondary>
-            <Flex
-              w={'fit-content'}
-              h={'fit-content'}
-              py={3}
-              variant={'unstyled'}
-              as={Button}
-              gap={2}
-              _hover={{
-                gap: 5,
-                color: useColorModeValue('blue.400', 'blue.500'),
-                transition: 'all 0.5s ease'
-              }}
-              transition={'all 0.5s ease'}
-            >
-              Read More <Icon as={BsChevronRight} />
-            </Flex>
-          </Stack>
-        </GridItem>
-
-        <GridItem gridColumn={{ lg: 'span 2' }}>
-          <Spacer />
-        </GridItem>
-
-        <GridItem
-          gridColumn={{
-            base: 'span 12',
-            lg: 'span 4'
-          }}
-        >
-
-        </GridItem>
-      </Grid>
+            <SingleCard
+              image="/img/portfolio/kisahnesia.png"
+              title="Kisahnesia"
+              description="This project is about a website that gathers all unique story from Indonesia, making it as a vast story library. User also can submit their regional unique story."
+            />
+          </GridItem>
+          <GridItem
+            colSpan={{
+              base: 2,
+              lg: 1
+            }}
+          >
+            <Stack spacing={8}>
+              <DoubleCard
+                image="/img/portfolio/victor.png"
+                title="The Viator"
+                description="A routing website that defines the best route to fish. Work by integrating many underwater sensor to produce best results."
+              />
+              <DoubleCard
+                image="/img/portfolio/illustrationist.png"
+                title="Illustrationist"
+                description="A website that turns your prompt into any ancient style paper drawing. May useful to retell past stories."
+              />
+            </Stack>
+          </GridItem>
+        </Grid>
+      </Stack>
     </Flex>
   )
 }

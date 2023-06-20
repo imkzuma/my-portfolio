@@ -1,4 +1,6 @@
 import { HeadingText } from "@/components/typography/Heading";
+import { ParagraphSecondary } from "@/components/typography/Paragraph";
+import { HeadingSpan } from "@/components/typography/headingSpan";
 import { Box, Button, Divider, Flex, Grid, GridItem, Icon, Image, Spacer, Stack, Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { BsLinkedin, BsGithub, BsInstagram, BsChevronDown } from "react-icons/bs";
@@ -72,15 +74,16 @@ export default function HeroLandingPage({ data, username }: any) {
             colSpan={{ base: 12, lg: 5 }}
           >
             <Stack direction={'column'} gap={4}>
+              <HeadingSpan title="PROFILE" />
               <HeadingText>
                 I&apos;m <u>{data?.name ? data.name : username}</u>, a {data?.position}
                 {data?.education ? ` at ${data?.education}` : ""}
               </HeadingText>
-              <Text color={useColorModeValue('gray.600', 'gray.400')} lineHeight={1.8}>
+              <ParagraphSecondary>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque modi harum voluptate expedita,
                 vel ducimus dolorum doloremque sit vero omnis eos aspernatur consequatur dolore et eum eligendi
                 velit deserunt nisi?
-              </Text>
+              </ParagraphSecondary>
               <Button
                 w={'fit-content'}
                 color={'white'}
@@ -127,11 +130,11 @@ export default function HeroLandingPage({ data, username }: any) {
                 <Text fontWeight={'semibold'} fontSize={'24px'}>
                   ABOUT ME
                 </Text>
-                <Text color={useColorModeValue('gray.600', 'gray.400')} lineHeight={1.8}>
+                <ParagraphSecondary>
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat, a qui. Aperiam dolorum
                   nobis incidunt. Porro veritatis, aliquam consequuntur officiis tempora ipsa, assumenda facere
                   accusamus maxime necessitatibus libero dolorum. A?
-                </Text>
+                </ParagraphSecondary>
               </Stack>
               <Divider />
               <Stack direction={'column'} spacing={4}>
