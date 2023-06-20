@@ -16,7 +16,7 @@ const SocialMedia = [
   { id: 3, name: 'Instagram', href: 'https://www.instagram.com/_gungkrsn/', icon: BsInstagram },
 ] as SocialMediaInterface[];
 
-export default function HeroLandingPage({ data }: any) {
+export default function HeroLandingPage({ data, username }: any) {
   return (
     <Flex
       minH={'90vh'}
@@ -59,7 +59,7 @@ export default function HeroLandingPage({ data }: any) {
           >
             <Stack direction={'column'} gap={4}>
               <HeadingText>
-                I&apos;m <u>{data?.name}</u>, a {data?.position}
+                I&apos;m <u>{data?.name ? data.name : username}</u>, a {data?.position}
                 {data?.education ? ` at ${data?.education}` : ""}
               </HeadingText>
               <Text color={useColorModeValue('gray.600', 'gray.400')} lineHeight={1.8}>

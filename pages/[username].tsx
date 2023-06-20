@@ -86,7 +86,7 @@ export default function Home() {
           <Stack spacing={{ base: 14, md: '8rem' }}>
             <BoxContainer>
               <Stack spacing={{ base: 14, md: '8rem' }}>
-                <HeroLandingPage data={dataProfile} />
+                <HeroLandingPage data={dataProfile} username={username} />
                 <SectionAbout />
               </Stack>
             </BoxContainer>

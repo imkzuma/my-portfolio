@@ -62,7 +62,7 @@ export default function BlogDetail() {
               </Stack>
             )}
             <Stack spacing={4} display={loading ? 'none' : 'block'} transition="all ease .3s">
-              <Flex as="a" href="/blog/" align={'center'} gap={1} w={'fit-content'}>
+              <Flex as="a" href={`/blog/${username}`} align={'center'} gap={1} w={'fit-content'}>
                 <ChevronLeftIcon fontSize={'3xl'} />
                 <Text fontWeight={'semibold'} fontSize={'lg'}>
                   Back
