@@ -25,9 +25,22 @@ export default function HeroLandingPage({ data, username }: any) {
       justifyContent={'center'}
       pos={'relative'}
       py={{ base: 10, lg: 0 }}
+      overflow={'hidden'}
     >
+      <Box
+        bgImage={'url(/img/lingkaran.png)'}
+        bgSize={'contain'}
+        bgRepeat={'no-repeat'}
+        pos={'absolute'}
+        h={'869px'} w={'869px'}
+        bottom={0}
+      />
+
       <Stack minW={'full'} spacing={{ base: 5, lg: 5 }}>
-        <Flex justifyContent={'center'} alignItems={'center'}>
+        <Flex
+          justifyContent={'center'}
+          alignItems={'center'}
+        >
           <Image
             as={motion.img}
             src={data?.image ? data?.image : '/img/landing/hero/hero.png'}
@@ -36,6 +49,7 @@ export default function HeroLandingPage({ data, username }: any) {
             objectFit={'cover'}
             zIndex={-1}
             w={{ base: "80%", lg: '32%' }}
+            display={{ base: 'flex', lg: 'none' }}
             filter={useColorModeValue('brightness(0.9)', 'brightness(0.75)')}
             whileInView={{
               opacity: 1,
@@ -52,7 +66,7 @@ export default function HeroLandingPage({ data, username }: any) {
         <Grid
           gridTemplateColumns={'repeat(12, 1fr)'}
           alignItems={'center'}
-          gap={{ base: 4, lg: 0 }}
+          gap={{ base: 4, lg: 8 }}
         >
           <GridItem
             colSpan={{ base: 12, lg: 5 }}
@@ -80,8 +94,25 @@ export default function HeroLandingPage({ data, username }: any) {
             </Stack>
           </GridItem>
 
-          <GridItem colSpan={{ base: 12, lg: 4 }}>
-            <Spacer />
+          <GridItem colSpan={{ base: 12, lg: 4 }} maxH={'90vh'}>
+            <Image
+              as={motion.img}
+              whileInView={{
+                opacity: 1,
+                transition: {
+                  duration: 0.5
+                }
+              }}
+              initial={{
+                opacity: 0,
+              }}
+              src={data?.image ? data?.image : '/img/landing/hero/hero.png'}
+              alt='hero'
+              objectFit={'contain'}
+              w={'full'} maxH={'90vh'}
+              filter={useColorModeValue('brightness(0.9)', 'brightness(0.75)')}
+              display={{ base: 'none', lg: 'block' }}
+            />
           </GridItem>
 
           <GridItem
@@ -95,20 +126,6 @@ export default function HeroLandingPage({ data, username }: any) {
               >
                 <Text fontWeight={'semibold'} fontSize={'24px'}>
                   ABOUT ME
-                </Text>
-                <Text color={useColorModeValue('gray.600', 'gray.400')} lineHeight={1.8}>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat, a qui. Aperiam dolorum
-                  nobis incidunt. Porro veritatis, aliquam consequuntur officiis tempora ipsa, assumenda facere
-                  accusamus maxime necessitatibus libero dolorum. A?
-                </Text>
-              </Stack>
-              <Divider />
-              <Stack
-                direction={'column'}
-                spacing={4}
-              >
-                <Text fontWeight={'semibold'} fontSize={'24px'}>
-                  MY WORK
                 </Text>
                 <Text color={useColorModeValue('gray.600', 'gray.400')} lineHeight={1.8}>
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat, a qui. Aperiam dolorum
