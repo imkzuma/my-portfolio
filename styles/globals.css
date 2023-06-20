@@ -3,3 +3,36 @@
 * {
     font-family: 'Poppins', sans-serif;
 }
+
+.parse-body h1{
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+.parse-body h2{
+    font-size: 2rem;
+    font-weight: 600;
+}
+.parse-body h3{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.parse-body h4{
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.parse-body h5{
+    font-size: 1rem;
+    font-weight: 600;
+}
+.parse-body h6{
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+.parse-body p{
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.parse-body ol, .parse-body ul{
+    padding-left: 1.5rem;    
+}

@@ -1,10 +1,77 @@
+import BoxContainer from '@/components/container'
 import SectionAbout from '@/components/landing/SectionAbout'
+import SectionBlog from '@/components/landing/SectionBlog'
+import SectionProject from '@/components/landing/SectionProject'
+import SectionStack from '@/components/landing/SectionStack'
 import HeroLandingPage from '@/components/landing/hero'
 import MainLayout from '@/layouts/MainLayout'
-import { Box } from '@chakra-ui/react'
+import { OfficialApi } from '@/utils/api'
+import { Box, Flex, Spinner, Stack } from '@chakra-ui/react'
 import Head from 'next/head'
+import { useLayoutEffect, useState } from 'react'
 
 export default function Home() {
+  const [dataBlog, setDataBlog] = useState<any>();
+  const [dataProfile, setDataProfile] = useState<any>();
+
+  const [loadingBlog, setLoadingBlog] = useState<boolean>(false);
+  const [loadingProfile, setLoadingProfile] = useState<boolean>(false);
+
+  const username = 'gungkrisna';
+
+  useLayoutEffect(() => {
+    const getProfile = async () => {
+      try {
+        setLoadingProfile(true);
+        const response = await OfficialApi.get(`/profile/${username}`);
+        console.log(response)
+        if (response.status === 200) {
+          setDataProfile(response.data.data);
+        }
+      } catch (error) {
+        //console.log(error);
+      } finally {
+        setLoadingProfile(false);
+      }
+    }
+    getProfile();
+    const getData = async () => {
+      try {
+        setLoadingBlog(true);
+        const response = await OfficialApi.get(`/post/${username}`);
+        const { data } = response;
+
+        if (data.code === 200) {
+          setDataBlog(data.data.posts);
+        }
+      } catch (error) {
+        //console.log(error);
+      } finally {
+        setTimeout(() => {
+          setLoadingBlog(false);
+        }, 1000);
+      }
+    }
+    getData();
+  }, []);
+
+  if (loadingBlog || loadingProfile) {
+    return (
+      <Flex
+        align={'center'}
+        justify={'center'}
+        w={'full'}
+        h={'100vh'}
+      >
+        <Spinner
+          size={'xl'}
+          thickness='4px'
+          speed='0.65s'
+        />
+      </Flex>
+    )
+  }
+
   return (
     <>
       <Head>
@@ -15,10 +82,25 @@ export default function Home() {
       </Head>
       <main>
         <MainLayout>
-          <Box px={{ base: 5, lg: '10rem' }}>
-            <HeroLandingPage />
-          </Box>
-          <SectionAbout />
+          <Stack spacing={{ base: 14, md: '8rem' }}>
+            <BoxContainer>
+              <Stack spacing={{ base: 14, md: '8rem' }}>
+                <HeroLandingPage data={dataProfile} />
+                <SectionAbout />
+              </Stack>
+            </BoxContainer>
+
+            <SectionProject />
+
+            <Stack>
+              <BoxContainer>
+                <SectionBlog data={dataBlog} />
+              </BoxContainer>
+
+              <SectionStack />
+            </Stack>
+
+          </Stack>
         </MainLayout>
       </main>
     </>

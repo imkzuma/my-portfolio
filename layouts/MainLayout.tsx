@@ -1,12 +1,13 @@
 import { ReactNode } from "react";
 import Navbar from "@/components/navbar";
-import { Box, useColorModeValue } from "@chakra-ui/react";
+import Footer from "@/components/footer";
 
-export default function MainLayout({ children } : { children: ReactNode }){
-    return(
-        <>
-            <Navbar />
-            { children }
-        </>
-    )
+export default function MainLayout({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+    </>
+  )
 }
