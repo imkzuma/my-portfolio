@@ -20,6 +20,9 @@ export default function Logout() {
           }
 
         } catch (error) {
+          localStorage.removeItem("auth-token");
+          localStorage.removeItem("auth-username");
+          router.replace("/auth/login")
           console.log(error);
         }
       }
