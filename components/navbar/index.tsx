@@ -47,15 +47,15 @@ const MobileNavbar = ({ isOpen, onClose, Links }: { isOpen: boolean, onClose: ()
   </Drawer>
 )
 
-export default function Navbar() {
+export default function Navbar({ username }: { username: string }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
   const Links = [
-    { id: 1, name: 'Home', href: '/', isActive: router.pathname === '/' },
+    { id: 1, name: 'Home', href: `/${username}`, isActive: router.pathname === '/[username]' },
     { id: 2, name: 'About', href: '#' },
-    { id: 3, name: 'Blog', href: '/blog', isActive: ['/blog', '/blog/post/[username]/[slug]'].includes(router.pathname) },
+    { id: 3, name: 'Blog', href: `/blog/${username}`, isActive: ['/blog/[username]', '/blog/post/[username]/[slug]'].includes(router.pathname) },
     { id: 4, name: 'Portfolio', href: '#' },
   ] as LinkData[];
 

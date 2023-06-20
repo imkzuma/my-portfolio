@@ -6,7 +6,7 @@ import { HeadingSpan } from "@/components/typography/headingSpan";
 import { HeadingText } from "@/components/typography/Heading";
 import { ParagraphSecondary } from "@/components/typography/Paragraph";
 
-export default function SectionBlog({ data }: { data: any }) {
+export default function SectionBlog({ data, username }: { data: any, username: string }) {
   return (
     <Box>
       <Stack spacing={7}>
@@ -63,6 +63,7 @@ export default function SectionBlog({ data }: { data: any }) {
                     title={item.title}
                     postDate={item.createdAt}
                     slug={item.slug}
+                    username={username}
                   />
                 </GridItem>
               )

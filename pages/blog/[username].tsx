@@ -7,14 +7,18 @@ import { useProfile } from "@/utils/hooks/useProfile";
 import { ChevronLeftIcon, ChevronRightIcon, SearchIcon } from "@chakra-ui/icons";
 import { Box, Button, Divider, Flex, FormControl, Grid, GridItem, Input, InputGroup, InputLeftElement, Select, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useState, useLayoutEffect } from 'react';
 
 export default function BlogList() {
+  const router = useRouter();
+  const { username } = router.query;
+
   const [data, setData] = useState<string[]>();
   const [countPage, setCountPage] = useState<number>();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const username = 'gungkrisna';
-  const profile = useProfile(username);
+
+  const profile = useProfile(username as string);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -37,12 +41,12 @@ export default function BlogList() {
         setCountPage(data.data.pagination.page_count);
 
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     }
     getData();
 
-  }, [currentPage]);
+  }, [currentPage, username]);
 
   const btnBlog = useColorModeValue('blue.500', 'blue.600');
 
@@ -51,7 +55,7 @@ export default function BlogList() {
       <Head>
         <title>My Portfolio | Blog</title>
       </Head>
-      <MainLayout>
+      <MainLayout username={username as string}>
         <HeroComponents name={profile?.name} heroName="Blog" paragraph="Blog" />
         <BoxContainer>
           <Stack py={10} spacing={10}>

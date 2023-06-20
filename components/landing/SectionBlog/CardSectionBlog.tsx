@@ -7,13 +7,14 @@ interface CardSectionBlogProps {
   title: string;
   postDate: string;
   slug: string;
+  username: string;
 }
 
-export default function CardSectionBlog({ image, title, postDate, slug }: CardSectionBlogProps) {
+export default function CardSectionBlog({ image, title, postDate, slug, username }: CardSectionBlogProps) {
   return (
     <Card
       as="a"
-      href={`/blog/post/tudemaha/${slug}`}
+      href={`/blog/post/${username}/${slug}`}
       maxW={'full'}
       boxShadow={'none'}
       bg={'transparent'}

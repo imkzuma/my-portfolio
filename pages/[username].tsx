@@ -8,23 +8,24 @@ import MainLayout from '@/layouts/MainLayout'
 import { OfficialApi } from '@/utils/api'
 import { Box, Flex, Spinner, Stack } from '@chakra-ui/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useLayoutEffect, useState } from 'react'
 
 export default function Home() {
+  const router = useRouter();
+  const { username } = router.query;
+
   const [dataBlog, setDataBlog] = useState<any>();
   const [dataProfile, setDataProfile] = useState<any>();
 
   const [loadingBlog, setLoadingBlog] = useState<boolean>(false);
   const [loadingProfile, setLoadingProfile] = useState<boolean>(false);
 
-  const username = 'gungkrisna';
-
   useLayoutEffect(() => {
     const getProfile = async () => {
       try {
         setLoadingProfile(true);
         const response = await OfficialApi.get(`/profile/${username}`);
-        console.log(response)
         if (response.status === 200) {
           setDataProfile(response.data.data);
         }
@@ -53,7 +54,7 @@ export default function Home() {
       }
     }
     getData();
-  }, []);
+  }, [username]);
 
   if (loadingBlog || loadingProfile) {
     return (
@@ -81,7 +82,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <MainLayout>
+        <MainLayout username={username as string}>
           <Stack spacing={{ base: 14, md: '8rem' }}>
             <BoxContainer>
               <Stack spacing={{ base: 14, md: '8rem' }}>
@@ -94,7 +95,7 @@ export default function Home() {
 
             <Stack>
               <BoxContainer>
-                <SectionBlog data={dataBlog} />
+                <SectionBlog data={dataBlog} username={username as string} />
               </BoxContainer>
 
               <SectionStack />

@@ -41,7 +41,7 @@ export default function BlogDetail() {
       <Head>
         <title>Portfolio | Blog</title>
       </Head>
-      <MainLayout>
+      <MainLayout username={username as string}>
         <Flex
           w={'full'}
           align={'center'}
