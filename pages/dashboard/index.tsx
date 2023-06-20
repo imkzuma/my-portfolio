@@ -16,7 +16,7 @@ export default function DashboardPage() {
   return (
     <>
       <DashboardLayout>
-        <h1>Dashboard Page</h1>
+        <h1>Dashboard {router.asPath}</h1>
       </DashboardLayout>
     </>
   )

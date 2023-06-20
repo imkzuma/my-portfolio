@@ -1,7 +1,7 @@
 import MainLayout from "@/layouts/MainLayout";
 import { OfficialApi } from "@/utils/api";
 import { ParsedDateTime } from "@/utils/parsingDateTime";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Heading, Icon, Image, Skeleton, SkeletonText, Stack, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Heading, Icon, Image, Skeleton, SkeletonText, Spinner, Stack, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRouter } from "next/router"
 import { useLayoutEffect, useState } from "react";
@@ -35,6 +35,23 @@ export default function BlogDetail() {
       getData();
     }
   }, [slug, username]);
+
+  if (loading) {
+    return (
+      <Flex
+        w={'full'}
+        align={'center'}
+        justify={'center'}
+        h={'100vh'}
+      >
+        <Spinner
+          size={'xl'}
+          thickness='4px'
+          speed='0.65s'
+        />
+      </Flex>
+    )
+  }
 
   return (
     <>
@@ -74,7 +91,7 @@ export default function BlogDetail() {
               >
                 {data?.title}
               </Heading>
-              <Flex align={'center'} gap={3} color={useColorModeValue('gray.500', 'gray.500')}>
+              <Flex align={'center'} gap={3} color={'gray.500'}>
                 <Icon as={BsClock} />
                 <Text>
                   Created at {ParsedDateTime(data?.createdAt)}
