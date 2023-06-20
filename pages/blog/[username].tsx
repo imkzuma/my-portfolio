@@ -1,3 +1,4 @@
+import { ChildListAnimate, ParentListAnimate } from "@/components/animation/ListTypeAnimate";
 import CardListBlog from "@/components/blog/card/CardList";
 import BoxContainer from "@/components/container";
 import HeroComponents from "@/components/hero";
@@ -6,6 +7,7 @@ import { OfficialApi } from "@/utils/api";
 import { useProfile } from "@/utils/hooks/useProfile";
 import { ChevronLeftIcon, ChevronRightIcon, SearchIcon } from "@chakra-ui/icons";
 import { Box, Button, Divider, Flex, FormControl, Grid, GridItem, Input, InputGroup, InputLeftElement, Select, Spinner, Stack, Text, useColorModeValue } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState, useLayoutEffect } from 'react';
@@ -126,16 +128,26 @@ export default function BlogList() {
             </Stack>
 
             <Stack>
-              <Stack spacing={5}>
+              <Stack as={motion.ul}
+                variants={ParentListAnimate}
+                initial="hidden"
+                whileInView="show"
+                spacing={5}
+              >
                 {data?.map((item: any, index: number) => {
                   if (index < 6) {
                     return (
-                      <Stack key={index} spacing={6}>
+                      <Stack key={index}
+                        as={motion.li}
+                        variants={ChildListAnimate}
+                        listStyleType={'none'}
+                        spacing={6}
+                      >
                         <CardListBlog
                           image={item.image}
                           postDate={item.createdAt}
                           slug={item.slug}
-                          username={'tudemaha'}
+                          username={username as string}
                           title={item.title}
                         >
                           <Button as="a"

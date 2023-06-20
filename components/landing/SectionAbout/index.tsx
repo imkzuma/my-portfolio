@@ -2,6 +2,8 @@ import { Box, Flex, Grid, GridItem, Heading, Image, Spacer, Stack, Text, useColo
 import { HeadingText } from "@/components/typography/Heading";
 import { ParagraphSecondary } from "@/components/typography/Paragraph";
 import { HeadingSpan } from "@/components/typography/headingSpan";
+import { motion } from "framer-motion";
+import { ChildListAnimate, ParentListAnimate } from "@/components/animation/ListTypeAnimate";
 
 const SingleCard = ({ title, description, image }: { title: string, description: string, image: string }) => {
   return (
@@ -88,8 +90,16 @@ export default function SectionAbout() {
       w={'full'}
       py={{ base: 10, lg: 0 }}
     >
-      <Stack spacing={10} w={'full'}>
-        <Stack textAlign={{ base: 'start', md: 'center' }} align={{ base: 'start', md: 'center' }}>
+      <Stack
+        spacing={10}
+        w={'full'}
+      >
+        <Stack as={motion.div}
+          initial={{ y: -50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1, transition: { duration: 0.8, type: "ease" } }}
+          textAlign={{ base: 'start', md: 'center' }}
+          align={{ base: 'start', md: 'center' }}
+        >
           <HeadingSpan title="HIGHTLIGHTED PORTOFOLIO" />
           <HeadingText>
             Searching for The Best? Sure, Here It Is!
@@ -99,11 +109,16 @@ export default function SectionAbout() {
           </ParagraphSecondary>
         </Stack>
 
-        <Grid
+        <Grid as={motion.ul}
+          variants={ParentListAnimate}
+          initial="hidden"
+          whileInView="show"
           templateColumns={'repeat(2,1fr)'}
           gap={8}
         >
-          <GridItem
+          <GridItem as={motion.li}
+            variants={ChildListAnimate}
+            listStyleType={'none'}
             colSpan={{
               base: 2,
               lg: 1
@@ -115,7 +130,9 @@ export default function SectionAbout() {
               description="This project is about a website that gathers all unique story from Indonesia, making it as a vast story library. User also can submit their regional unique story."
             />
           </GridItem>
-          <GridItem
+          <GridItem as={motion.li}
+            variants={ChildListAnimate}
+            listStyleType={'none'}
             colSpan={{
               base: 2,
               lg: 1
@@ -136,6 +153,6 @@ export default function SectionAbout() {
           </GridItem>
         </Grid>
       </Stack>
-    </Flex>
+    </Flex >
   )
 }

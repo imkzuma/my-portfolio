@@ -1,3 +1,4 @@
+import { ChildListAnimate, ParentListAnimate } from "@/components/animation/ListTypeAnimate";
 import { HeadingText } from "@/components/typography/Heading";
 import { ParagraphSecondary } from "@/components/typography/Paragraph";
 import { HeadingSpan } from "@/components/typography/headingSpan";
@@ -56,7 +57,8 @@ export default function HeroLandingPage({ data, username }: any) {
             whileInView={{
               opacity: 1,
               transition: {
-                duration: 0.5
+                duration: 0.8,
+                type: "ease"
               }
             }}
             initial={{
@@ -73,7 +75,12 @@ export default function HeroLandingPage({ data, username }: any) {
           <GridItem
             colSpan={{ base: 12, lg: 5 }}
           >
-            <Stack direction={'column'} gap={4}>
+            <Stack as={motion.div}
+              initial={{ y: -50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1, transition: { duration: 0.8, type: "ease" } }}
+              direction={'column'}
+              gap={4}
+            >
               <HeadingSpan title="PROFILE" />
               <HeadingText>
                 I&apos;m <u>{data?.name ? data.name : username}</u>, a {data?.position}
@@ -103,7 +110,8 @@ export default function HeroLandingPage({ data, username }: any) {
               whileInView={{
                 opacity: 1,
                 transition: {
-                  duration: 0.5
+                  duration: 0.8,
+                  type: "ease"
                 }
               }}
               initial={{
@@ -121,9 +129,16 @@ export default function HeroLandingPage({ data, username }: any) {
           <GridItem
             colSpan={{ base: 12, lg: 3 }}
           >
-            <Stack direction={'column'} spacing={7}>
+            <Stack as={motion.ul}
+              variants={ParentListAnimate}
+              initial={'hidden'}
+              whileInView={'show'}
+              direction={'column'}
+              spacing={7}
+            >
               <Divider display={{ lg: 'none' }} />
-              <Stack
+              <Stack as={motion.li}
+                variants={ChildListAnimate}
                 direction={'column'}
                 spacing={4}
               >
@@ -137,7 +152,11 @@ export default function HeroLandingPage({ data, username }: any) {
                 </ParagraphSecondary>
               </Stack>
               <Divider />
-              <Stack direction={'column'} spacing={4}>
+              <Stack as={motion.li}
+                variants={ChildListAnimate}
+                direction={'column'}
+                spacing={4}
+              >
                 <Text fontWeight={'semibold'} fontSize={'24px'}>
                   FOLLOW ME
                 </Text>
