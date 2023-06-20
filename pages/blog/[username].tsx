@@ -5,7 +5,7 @@ import MainLayout from "@/layouts/MainLayout";
 import { OfficialApi } from "@/utils/api";
 import { useProfile } from "@/utils/hooks/useProfile";
 import { ChevronLeftIcon, ChevronRightIcon, SearchIcon } from "@chakra-ui/icons";
-import { Box, Button, Divider, Flex, FormControl, Grid, GridItem, Input, InputGroup, InputLeftElement, Select, Stack, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, FormControl, Grid, GridItem, Input, InputGroup, InputLeftElement, Select, Spinner, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState, useLayoutEffect } from 'react';
@@ -15,10 +15,13 @@ export default function BlogList() {
   const { username } = router.query;
 
   const [data, setData] = useState<string[]>();
+
   const [countPage, setCountPage] = useState<number>();
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const profile = useProfile(username as string);
+  const [loadingBlog, setLoadingBlog] = useState<boolean>(false);
+
+  const [profile, loadingProfile] = useProfile(username as string);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -35,6 +38,7 @@ export default function BlogList() {
   useLayoutEffect(() => {
     const getData = async () => {
       try {
+        setLoadingBlog(true);
         const response = await OfficialApi.get(`/post/${username}?page=${currentPage}`);
         const { data } = response;
         setData(data.data.posts);
@@ -42,6 +46,10 @@ export default function BlogList() {
 
       } catch (error) {
         //console.log(error);
+      } finally {
+        setTimeout(() => {
+          setLoadingBlog(false);
+        }, 1000);
       }
     }
     getData();
@@ -49,6 +57,24 @@ export default function BlogList() {
   }, [currentPage, username]);
 
   const btnBlog = useColorModeValue('blue.500', 'blue.600');
+  const graySecondary = useColorModeValue('gray.200', 'gray.900');
+
+  if (loadingBlog || loadingProfile) {
+    return (
+      <Flex
+        align={'center'}
+        justify={'center'}
+        w={'full'}
+        h={'100vh'}
+      >
+        <Spinner
+          size={'xl'}
+          thickness='4px'
+          speed='0.65s'
+        />
+      </Flex>
+    )
+  }
 
   return (
     <>
@@ -56,17 +82,17 @@ export default function BlogList() {
         <title>My Portfolio | Blog</title>
       </Head>
       <MainLayout username={username as string}>
-        <HeroComponents name={profile?.name} heroName="Blog" paragraph="Blog" />
+        <HeroComponents data={profile} heroName="Blog" paragraph="Blog" />
         <BoxContainer>
           <Stack py={10} spacing={10}>
             <Stack py={5}>
               <InputGroup>
                 <InputLeftElement h={14}>
-                  <SearchIcon color={useColorModeValue('gray.500', 'gray.600')} />
+                  <SearchIcon color={btnBlog} />
                 </InputLeftElement>
                 <Input
                   type="text"
-                  bg={useColorModeValue('gray.200', 'gray.900')}
+                  bg={graySecondary}
                   h={14}
                   placeholder="Search an artikel"
                 />
@@ -80,7 +106,7 @@ export default function BlogList() {
                 >
                   <Select
                     placeholder="Choose Category"
-                    bg={useColorModeValue('gray.200', 'gray.900')}
+                    bg={graySecondary}
                     h={14}
                   />
                 </GridItem>
@@ -92,7 +118,7 @@ export default function BlogList() {
                 >
                   <Select
                     placeholder="Order By"
-                    bg={useColorModeValue('gray.200', 'gray.900')}
+                    bg={graySecondary}
                     h={14}
                   />
                 </GridItem>

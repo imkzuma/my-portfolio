@@ -6,6 +6,7 @@ import SectionStack from '@/components/landing/SectionStack'
 import HeroLandingPage from '@/components/landing/hero'
 import MainLayout from '@/layouts/MainLayout'
 import { OfficialApi } from '@/utils/api'
+import { useProfile } from '@/utils/hooks/useProfile'
 import { Box, Flex, Spinner, Stack } from '@chakra-ui/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -16,26 +17,11 @@ export default function Home() {
   const { username } = router.query;
 
   const [dataBlog, setDataBlog] = useState<any>();
-  const [dataProfile, setDataProfile] = useState<any>();
-
   const [loadingBlog, setLoadingBlog] = useState<boolean>(false);
-  const [loadingProfile, setLoadingProfile] = useState<boolean>(false);
+
+  const [dataProfile, loadingProfile] = useProfile(username as string);
 
   useLayoutEffect(() => {
-    const getProfile = async () => {
-      try {
-        setLoadingProfile(true);
-        const response = await OfficialApi.get(`/profile/${username}`);
-        if (response.status === 200) {
-          setDataProfile(response.data.data);
-        }
-      } catch (error) {
-        //console.log(error);
-      } finally {
-        setLoadingProfile(false);
-      }
-    }
-    getProfile();
     const getData = async () => {
       try {
         setLoadingBlog(true);

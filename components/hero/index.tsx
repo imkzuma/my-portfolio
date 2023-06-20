@@ -1,7 +1,7 @@
 import { Flex, Grid, GridItem, Heading, Image, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import BoxContainer from "../container";
 
-export default function HeroComponents({ name, heroName, paragraph }: { name: string, heroName: string, paragraph: string }) {
+export default function HeroComponents({ data, heroName, paragraph }: { data: any, heroName: string, paragraph: string }) {
   return (
     <Flex
       justify={'center'} align={'center'}
@@ -29,7 +29,7 @@ export default function HeroComponents({ name, heroName, paragraph }: { name: st
                 fontSize={{ base: '3xl', lg: '5xl' }}
                 fontWeight={'semibold'}
               >
-                Iam <u>{name}</u> and this is my {heroName}
+                Iam <u>{data?.name}</u> and this is my {heroName}
               </Text>
               <Text
                 lineHeight={1.8}
@@ -49,8 +49,8 @@ export default function HeroComponents({ name, heroName, paragraph }: { name: st
             }}
           >
             <Image
-              src="/img/landing/hero/hero.png"
-              alt={name}
+              src={data?.image}
+              alt={data?.name}
               h={550}
               display={{ base: 'none', lg: 'block' }}
             />
