@@ -2,6 +2,7 @@ import { ChildListAnimate, ParentListAnimate } from "@/components/animation/List
 import { HeadingText } from "@/components/typography/Heading";
 import { ParagraphSecondary } from "@/components/typography/Paragraph";
 import { HeadingSpan } from "@/components/typography/headingSpan";
+import { ProfileProps } from "@/utils/interface/Profile";
 import { Box, Button, Divider, Flex, Grid, GridItem, Icon, Image, Spacer, Stack, Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { BsLinkedin, BsGithub, BsInstagram, BsChevronDown } from "react-icons/bs";
@@ -19,7 +20,12 @@ const SocialMedia = [
   { id: 3, name: 'Instagram', href: 'https://www.instagram.com/_gungkrsn/', icon: BsInstagram },
 ] as SocialMediaInterface[];
 
-export default function HeroLandingPage({ data, username }: any) {
+interface HeroLandingPageProps {
+  data: ProfileProps;
+  username: string;
+}
+
+export default function HeroLandingPage({ data, username }: HeroLandingPageProps) {
   return (
     <Flex
       minH={'90vh'}
@@ -87,9 +93,7 @@ export default function HeroLandingPage({ data, username }: any) {
                 {data?.education ? ` at ${data?.education}` : ""}
               </HeadingText>
               <ParagraphSecondary>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque modi harum voluptate expedita,
-                vel ducimus dolorum doloremque sit vero omnis eos aspernatur consequatur dolore et eum eligendi
-                velit deserunt nisi?
+                {data?.about.slice(0, 150)}...
               </ParagraphSecondary>
               <Button
                 w={'fit-content'}
@@ -99,7 +103,7 @@ export default function HeroLandingPage({ data, username }: any) {
                   bg: useColorModeValue('blue.500', 'blue.700')
                 }}
               >
-                Read More
+                View Profile
               </Button>
             </Stack>
           </GridItem>
@@ -146,9 +150,7 @@ export default function HeroLandingPage({ data, username }: any) {
                   ABOUT ME
                 </Text>
                 <ParagraphSecondary>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat, a qui. Aperiam dolorum
-                  nobis incidunt. Porro veritatis, aliquam consequuntur officiis tempora ipsa, assumenda facere
-                  accusamus maxime necessitatibus libero dolorum. A?
+                  {data?.about}
                 </ParagraphSecondary>
               </Stack>
               <Divider />

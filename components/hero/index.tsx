@@ -1,11 +1,18 @@
 import { Box, Flex, Grid, GridItem, Heading, Image, Stack, Text, useColorModeValue } from "@chakra-ui/react";
-import BoxContainer from "../container";
-import { HeadingText } from "../typography/Heading";
-import { ParagraphSecondary } from "../typography/Paragraph";
 import { motion } from "framer-motion";
-import { HeadingSpan } from "../typography/headingSpan";
+import BoxContainer from "@/components/container";
+import { HeadingText } from "@/components/typography/Heading";
+import { ParagraphSecondary } from "@/components/typography/Paragraph";
+import { HeadingSpan } from "@/components/typography/headingSpan";
+import { ProfileProps } from "@/utils/interface/Profile";
 
-export default function HeroComponents({ data, heroName, paragraph }: { data: any, heroName: string, paragraph: string }) {
+interface HeroComponentsProps {
+  data: ProfileProps;
+  heroName: string;
+  paragraph: string;
+}
+
+export default function HeroComponents({ data, heroName, paragraph }: HeroComponentsProps) {
   return (
     <Flex
       justify={'center'} align={'center'}
@@ -49,9 +56,7 @@ export default function HeroComponents({ data, heroName, paragraph }: { data: an
                 Iam <u>{data?.name}</u> and this is my {heroName}
               </HeadingText>
               <ParagraphSecondary>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque modi harum
-                voluptate expedita, vel ducimus dolorum doloremque sit vero omnis eos
-                aspernatur consequatur dolore et eum eligendi velit deserunt nisi?
+                {data?.about}
               </ParagraphSecondary>
             </Stack>
           </GridItem>
