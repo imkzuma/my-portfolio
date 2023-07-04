@@ -117,7 +117,7 @@ export default function HomePage() {
             <Flex justify={'center'} gap={5}>
               <Text as="a" href="/auth/login" color={'blue.500'}>Login</Text>
               |
-              <Text as="a" href="/auth/register">Register</Text>
+              <Text as="a" href="/auth/register" color={'gray.600'}>Register</Text>
             </Flex>
           </Stack>
 
