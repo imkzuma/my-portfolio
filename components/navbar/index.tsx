@@ -91,6 +91,7 @@ export default function Navbar({ username }: { username: string }) {
   const Links = [
     { id: 1, name: 'Home', href: `/${username}`, isActive: router.pathname === '/[username]' },
     { id: 3, name: 'Blog', href: `/blog/${username}`, isActive: ['/blog/[username]', '/blog/post/[username]/[slug]'].includes(router.pathname) },
+    { id: 4, name: 'Profile', href: `/profile/${username}`, isActive: ['/profile/[username]'].includes(router.pathname) }
   ] as LinkData[];
 
   return (

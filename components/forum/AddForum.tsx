@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import parse from 'html-react-parser';
 import InputText from "../forms/InputText";
 import CardAddForum from "./card/AddForum";
-import { ArrowBackIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import { OfficialApi } from "@/utils/api";

@@ -5,6 +5,7 @@ import { HeadingSpan } from "@/components/typography/headingSpan";
 import { ProfileProps } from "@/utils/interface/Profile";
 import { Box, Button, Divider, Flex, Grid, GridItem, Icon, Image, Spacer, Stack, Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 import { BsLinkedin, BsGithub, BsInstagram, BsChevronDown } from "react-icons/bs";
 
 interface SocialMediaInterface {
@@ -26,6 +27,8 @@ interface HeroLandingPageProps {
 }
 
 export default function HeroLandingPage({ data, username }: HeroLandingPageProps) {
+  const router = useRouter();
+
   return (
     <Flex
       minH={'90vh'}
@@ -102,6 +105,7 @@ export default function HeroLandingPage({ data, username }: HeroLandingPageProps
                 _hover={{
                   bg: useColorModeValue('blue.500', 'blue.700')
                 }}
+                onClick={() => router.push({ pathname: "/profile/[username]", query: { username: username } })}
               >
                 View Profile
               </Button>
