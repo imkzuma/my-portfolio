@@ -96,7 +96,6 @@ export default function ListBlogDashboard() {
                     username={username as string}
                     title={item.title}
                   >
-                    <Text>{item.slug}</Text>
                     <Flex gap={3}>
                       <Button as="a"
                         size={{ base: 'sm', md: 'md' }}

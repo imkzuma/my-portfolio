@@ -17,9 +17,10 @@ export default function HeroComponents({ data, heroName, paragraph }: HeroCompon
     <Flex
       justify={'center'} align={'center'}
       w={'full'}
-      minH={{ base: '65vh', lg: '80vh' }}
+      minH={{ base: '100vh', lg: '80vh' }}
       bg={useColorModeValue('white', 'gray.800')}
       pos={'relative'}
+      overflow={'hidden'}
     >
       <Box
         bgImage={'url(/img/lingkaran.png)'}

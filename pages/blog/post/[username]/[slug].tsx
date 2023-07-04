@@ -1,7 +1,7 @@
 import MainLayout from "@/layouts/MainLayout";
 import { OfficialApi } from "@/utils/api";
 import { ParsedDateTime } from "@/utils/parsingDateTime";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Heading, Icon, Image, Skeleton, SkeletonText, Spinner, Stack, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Flex, Heading, Icon, Image, Skeleton, SkeletonText, Spinner, Stack, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRouter } from "next/router"
 import { useLayoutEffect, useState } from "react";
@@ -35,6 +35,15 @@ export default function BlogDetail() {
       getData();
     }
   }, [slug, username]);
+
+  const handleForumThread = () => {
+    router.push({
+      pathname: "thread",
+      query: {
+        slug: slug, username: username
+      }
+    });
+  }
 
   if (loading) {
     return (
@@ -104,6 +113,17 @@ export default function BlogDetail() {
                 rounded={'lg'}
               />
               {data?.content && parse(String(data?.content))}
+
+              <Box pt={10}>
+                <Button
+                  colorScheme="blue"
+                  py={7}
+                  w={'full'}
+                  onClick={handleForumThread}
+                >
+                  Open Forum Thread
+                </Button>
+              </Box>
 
             </Stack>
           </Flex>
