@@ -22,6 +22,10 @@ export default function Home() {
   const [dataProfile, loadingProfile] = useProfile(username as string);
 
   useLayoutEffect(() => {
+    if (dataProfile === null) {
+      router.replace('/404');
+    }
+
     const getData = async () => {
       try {
         setLoadingBlog(true);
@@ -39,8 +43,10 @@ export default function Home() {
         }, 1000);
       }
     }
-    getData();
-  }, [username]);
+    if (username) {
+      getData();
+    }
+  }, [username, dataProfile, router]);
 
   if (loadingBlog || loadingProfile) {
     return (
