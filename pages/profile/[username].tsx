@@ -19,7 +19,7 @@ const DataDetail = ({ icon, title, content }: any) => {
         <Icon as={icon} />
         <Stack>
           <Text>{title}</Text>
-          <Text color={useColorModeValue("gray.500", "gray.500")}>
+          <Text lineHeight={1.8} color={useColorModeValue("gray.500", "gray.500")}>
             {content}
           </Text>
         </Stack>
@@ -66,7 +66,6 @@ export default function ProfileDetail() {
         const { data } = response;
         if (response.status === 200) {
           setProfile(data.data);
-          console.log(data.data)
         }
       } catch (error) {
         router.replace('/404');
