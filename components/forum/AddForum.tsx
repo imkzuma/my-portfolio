@@ -1,6 +1,6 @@
 import { Flex, Box, Stack, Text, Heading, useColorModeValue, Divider, Icon, Button, Spacer, Fade, useToast } from "@chakra-ui/react";
 import InputTextArea from "../forms/InputTextarea";
-import { useState, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import parse from 'html-react-parser';
 import InputText from "../forms/InputText";
 import CardAddForum from "./card/AddForum";
@@ -39,8 +39,29 @@ export default function AddForumComponents({ slug, username }: { slug: string, u
   const [isPreview, setPreview] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('auth-token')
+    if (token) {
+      setIsLogin(true);
+    }
+  }, []);
+
   const handlePostThreads = async (e: any) => {
     e.preventDefault();
+
+    if (!isLogin) {
+      return Toast({
+        position: "top",
+        title: "Login Terlebih Dahulu",
+        description: "Tidak bisa membuat thread, anda harus login terlebih dahulu",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
     try {
       setLoading(true);
       const response = await OfficialApi.post('/thread/create', {

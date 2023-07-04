@@ -1,14 +1,42 @@
 import { OfficialApi } from "@/utils/api";
-import { Avatar, Button, Fade, Flex, Input, Stack, useColorModeValue } from "@chakra-ui/react";
-import { useState } from "react";
+import { Avatar, Button, Fade, Flex, Input, Stack, useColorModeValue, useToast } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
 export default function WriteReplyComponent({ id, username, ...rest }: any) {
+  const toast = useToast();
+
   const [comment, setComment] = useState<string>('');
   const [showButton, setShowButton] = useState<boolean>(false);
+  const [commentUsername, setCommentUsername] = useState<string>('');
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('auth-token')
+    if (token) {
+      const userLoginName = localStorage.getItem('auth-username');
+      setCommentUsername(userLoginName as string);
+      setIsLogin(true);
+    }
+    else {
+      setCommentUsername('');
+      setIsLogin(false);
+    }
+  }, []);
 
   const handlePostReply = async (e: any) => {
     e.preventDefault();
+
     try {
+      if (!isLogin) {
+        return toast({
+          position: "top",
+          title: "Login Terlebih Dahulu",
+          description: "Tidak Bisa Komen. Silahkan login terlebih dahulu",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
       const response = await OfficialApi.post('/thread/comment', {
         content: comment,
         parent: id
@@ -17,7 +45,17 @@ export default function WriteReplyComponent({ id, username, ...rest }: any) {
         window.location.reload();
       }
     } catch (error) {
-      console.log(error);
+      const { response } = error as any;
+      if (response.status === 401) {
+        return toast({
+          position: "top",
+          title: "Login Terlebih Dahulu",
+          description: "Tidak Bisa Komen. Silahkan login terlebih dahulu",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     }
   }
 
@@ -43,7 +81,7 @@ export default function WriteReplyComponent({ id, username, ...rest }: any) {
         align={'center'}
       >
         <Avatar
-          name={username}
+          name={commentUsername ? commentUsername : ''}
         />
         <Input
           border={'none'}
