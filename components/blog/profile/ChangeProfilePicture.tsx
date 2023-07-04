@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from 'react';
 import { OfficialApi } from "@/utils/api";
-import { Button, Flex, Input, Stack, useToast } from "@chakra-ui/react";
+import { Button, Flex, Input, Stack, Text, useToast } from "@chakra-ui/react";
 import FormData from "form-data";
 
 const ChangeProfilePicture = ({ username, setUrl }: { username: string, setUrl: any }) => {
@@ -12,8 +12,20 @@ const ChangeProfilePicture = ({ username, setUrl }: { username: string, setUrl: 
   const [image, setImage] = useState<any>();
 
   const handleImageChange = (e: any) => {
-    setImage(e.target.files[0]);
-    setUrl(URL.createObjectURL(e.target.files[0]));
+    if (e.target.files[0].size > 2 * 1024 * 1024) {
+      return Toast({
+        position: 'top',
+        title: "Failed",
+        description: "Image size must be under 2Mb",
+        status: "error",
+        duration: 3000,
+        isClosable: true
+      });
+    }
+    else {
+      setImage(e.target.files[0]);
+      setUrl(URL.createObjectURL(e.target.files[0]));
+    }
   }
 
   const handleSubmit = async (e: any) => {
@@ -44,6 +56,17 @@ const ChangeProfilePicture = ({ username, setUrl }: { username: string, setUrl: 
       }
 
     } catch (error) {
+      const { response } = error as any;
+      if (response.status === 400) {
+        return Toast({
+          position: 'top',
+          title: "Failed",
+          description: "Image size must be under 2Mb",
+          status: "error",
+          duration: 3000,
+          isClosable: true
+        });
+      }
       console.log(error);
     } finally {
       setLoading(false);
@@ -52,6 +75,7 @@ const ChangeProfilePicture = ({ username, setUrl }: { username: string, setUrl: 
 
   return (
     <Stack spacing={5}>
+      <Text color={'red.400'}>* Gambar maksimal 2MB</Text>
       <Input type="file" onChange={handleImageChange} />
       <Flex justify={'end'}>
         <Button

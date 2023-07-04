@@ -120,7 +120,6 @@ export default function HomePage() {
               <Text as="a" href="/auth/register">Register</Text>
             </Flex>
           </Stack>
-
         </Flex>
       </BoxContainer>
     </>
