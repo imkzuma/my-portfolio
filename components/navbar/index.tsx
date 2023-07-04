@@ -136,9 +136,9 @@ export default function Navbar({ username }: { username: string }) {
                 </Text>
               </NavLink>
             ) : (
-              <NavLink href={`/auth/login`} isActive={false}>
+              <NavLink href={`/auth`} isActive={false}>
                 <Text fontSize={'14px'}>
-                  Login
+                  Auth
                 </Text>
               </NavLink>
             )}

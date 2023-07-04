@@ -43,6 +43,9 @@ export default function Navbar() {
         pe={{ base: 5, lg: 10 }}
         spacing={{ base: 3, md: 7 }}
       >
+        <Text as="a" href="/">
+          Home
+        </Text>
         <HStack
           border={'1px'}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
