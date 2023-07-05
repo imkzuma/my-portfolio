@@ -16,7 +16,7 @@ export default function BlogList() {
   const router = useRouter();
   const { username } = router.query;
 
-  const [data, setData] = useState<string[]>();
+  const [data, setData] = useState<any>();
 
   const [countPage, setCountPage] = useState<number>();
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -135,42 +135,40 @@ export default function BlogList() {
                 spacing={5}
               >
                 {data?.map((item: any, index: number) => {
-                  if (index < 6) {
-                    return (
-                      <Stack key={index}
-                        as={motion.li}
-                        variants={ChildListAnimate}
-                        listStyleType={'none'}
-                        spacing={6}
+                  return (
+                    <Stack key={index}
+                      as={motion.li}
+                      variants={ChildListAnimate}
+                      listStyleType={'none'}
+                      spacing={6}
+                    >
+                      <CardListBlog
+                        image={item.image}
+                        postDate={item.createdAt}
+                        slug={item.slug}
+                        username={username as string}
+                        title={item.title}
                       >
-                        <CardListBlog
-                          image={item.image}
-                          postDate={item.createdAt}
-                          slug={item.slug}
-                          username={username as string}
-                          title={item.title}
+                        <Button as="a"
+                          href={`/blog/post/${username}/${item.slug}`}
+                          variant={'ghost'}
+                          w={'fit-content'}
+                          p={0}
+                          color={btnBlog}
+                          gap={1}
+                          _hover={{
+                            bg: 'transparent',
+                            gap: 3,
+                            transition: 'all ease-in .3s'
+                          }}
+                          transition={'all ease-out .3s'}
                         >
-                          <Button as="a"
-                            href={`/blog/post/${username}/${item.slug}`}
-                            variant={'ghost'}
-                            w={'fit-content'}
-                            p={0}
-                            color={btnBlog}
-                            gap={1}
-                            _hover={{
-                              bg: 'transparent',
-                              gap: 3,
-                              transition: 'all ease-in .3s'
-                            }}
-                            transition={'all ease-out .3s'}
-                          >
-                            Baca Selengkapnya <ChevronRightIcon fontSize={'xl'} />
-                          </Button>
-                        </CardListBlog>
-                        <Divider />
-                      </Stack>
-                    )
-                  }
+                          Baca Selengkapnya <ChevronRightIcon fontSize={'xl'} />
+                        </Button>
+                      </CardListBlog>
+                      <Divider />
+                    </Stack>
+                  )
                 })}
               </Stack>
               <Flex justify={'space-between'} align={'center'} >

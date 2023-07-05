@@ -6,7 +6,7 @@ import { ProfileProps } from "@/utils/interface/Profile";
 import { Box, Button, Divider, Flex, Grid, GridItem, Icon, Image, Spacer, Stack, Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import { BsLinkedin, BsGithub, BsInstagram, BsChevronDown } from "react-icons/bs";
+import { BsLinkedin, BsGithub, BsInstagram, BsChevronDown, BsWhatsapp } from "react-icons/bs";
 
 interface SocialMediaInterface {
   id: number;
@@ -167,19 +167,24 @@ export default function HeroLandingPage({ data, username }: HeroLandingPageProps
                   FOLLOW ME
                 </Text>
                 <Flex gap={3}>
-                  {SocialMedia.map((item) => {
-                    return (
-                      <Button key={item.id}
-                        as={'a'}
-                        href={item.href}
-                        variant={'outline'}
-                        p={0}
-                        size={'lg'}
-                      >
-                        <Icon as={item.icon} fontSize={'xl'} />
-                      </Button>
-                    )
-                  })}
+                  <Button
+                    as={'a'}
+                    href={`https://wa.me/${data?.wa}`}
+                    variant={'outline'}
+                    p={0}
+                    size={'lg'}
+                  >
+                    <Icon as={BsWhatsapp} fontSize={'xl'} />
+                  </Button>
+                  <Button
+                    as={'a'}
+                    href={`https://instagram.com/${data?.instagram}`}
+                    variant={'outline'}
+                    p={0}
+                    size={'lg'}
+                  >
+                    <Icon as={BsInstagram} fontSize={'xl'} />
+                  </Button>
                 </Flex>
               </Stack>
             </Stack>
