@@ -1,7 +1,6 @@
 import ChatLayout from "@/layouts/ChatLayout";
 import { ChatbotApi } from "@/utils/api";
 import { Avatar, Box, Button, Flex, Icon, Input, InputGroup, InputRightElement, Stack, Text, useColorModeValue } from "@chakra-ui/react";
-import axios from "axios";
 import Head from "next/head";
 import { useState } from "react";
 import { BsSend } from "react-icons/bs";
@@ -106,6 +105,7 @@ export default function ChatBot() {
     <>
       <Head>
         <title>Portfolio | Chatbot</title>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
       <ChatLayout>
         <Stack align={'center'}>
