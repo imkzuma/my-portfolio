@@ -21,3 +21,8 @@ export default function DashboardPage() {
     </>
   )
 }
+
+// gabung chatbot 
+// buat admin buat kontrol data
+// buat grafik nampilin apa aja isi content nya
+// bnyk user, banyk blog, banyak lainnya.

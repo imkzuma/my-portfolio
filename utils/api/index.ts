@@ -10,6 +10,14 @@ export const OfficialApi = axios.create({
   }
 });
 
+export const ChatbotApi = axios.create({
+  baseURL: "http://20.205.112.214:5000/",
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  }
+})
+
 OfficialApi.interceptors.request.use((config) => {
   const token = localStorage.getItem("auth-token");
 
