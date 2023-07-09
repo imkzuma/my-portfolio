@@ -14,14 +14,12 @@ export default function Logout() {
           const response = await OfficialApi.post("/account/logout");
 
           if (response.status === 200) {
-            localStorage.removeItem("auth-token");
-            localStorage.removeItem("auth-username");
+            localStorage.removeItem("@portfolio/user");
             router.replace("/auth/login");
           }
 
         } catch (error) {
-          localStorage.removeItem("auth-token");
-          localStorage.removeItem("auth-username");
+          localStorage.removeItem("@portfolio/user");
           router.replace("/auth/login")
           console.log(error);
         }

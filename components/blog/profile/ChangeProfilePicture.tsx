@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { OfficialApi } from "@/utils/api";
 import { Button, Flex, Input, Stack, Text, useToast } from "@chakra-ui/react";
 import FormData from "form-data";
+import Swal from "sweetalert2";
 
 const ChangeProfilePicture = ({ username, setUrl }: { username: string, setUrl: any }) => {
   const router = useRouter();
@@ -57,6 +58,21 @@ const ChangeProfilePicture = ({ username, setUrl }: { username: string, setUrl: 
 
     } catch (error) {
       const { response } = error as any;
+      if (response.status === 401) {
+        localStorage.removeItem('auth-token');
+        localStorage.removeItem('auth-username');
+        Swal.fire({
+          title: "Oops...",
+          text: "Your session is expired, please login again",
+          icon: "error",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#3085d6",
+          allowOutsideClick: false
+        }).then(() => {
+          router.replace('/auth/login');
+        });
+      }
+
       if (response.status === 400) {
         return Toast({
           position: 'top',

@@ -4,7 +4,7 @@ import { DashboardLayout } from "@/layouts/DashboardLayout";
 import { OfficialApi } from "@/utils/api";
 import useAuth from "@/utils/hooks/useAuth";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Box, Button, Divider, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import { Button, Divider, Flex, Skeleton, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useLayoutEffect, useRef, useState } from "react";
@@ -19,6 +19,7 @@ export default function ListBlogDashboard() {
   const [username, setUsername] = useState<string>();
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const [slug, setSlug] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const cancelRef = useRef();
 
@@ -39,12 +40,15 @@ export default function ListBlogDashboard() {
       router.push('/auth/login');
     }
 
-    const authUsername = localStorage.getItem('auth-username');
+    const user = localStorage.getItem('@portfolio/user');
+    const authUsername = user ? JSON.parse(user).username : null;
+
     if (authUsername) {
       setUsername(authUsername);
     }
     const getData = async () => {
       try {
+        setLoading(true);
         const response = await OfficialApi.get(`/post/${username}?page=${currentPage}`);
         const { data } = response;
         setData(data.data.posts);
@@ -52,6 +56,8 @@ export default function ListBlogDashboard() {
 
       } catch (error) {
         // console.log(error);
+      } finally {
+        setLoading(false);
       }
     }
     getData();
@@ -84,7 +90,13 @@ export default function ListBlogDashboard() {
           <Text fontSize={'xl'} fontWeight={'semibold'}>
             List Blogs
           </Text>
-          {data && data.length > 0
+          {loading ? (
+            Array(10).fill(10).map((_, index) => {
+              return (
+                <Skeleton key={index} height="200px" />
+              )
+            })
+          ) : data && data.length > 0
             ? (data?.map((item: any, index: number) => {
               return (
                 <Stack key={index} spacing={6} >

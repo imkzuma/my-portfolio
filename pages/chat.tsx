@@ -105,7 +105,6 @@ export default function ChatBot() {
     <>
       <Head>
         <title>Portfolio | Chatbot</title>
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
       <ChatLayout>
         <Stack align={'center'}>

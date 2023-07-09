@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
 const url = "https://official-site.tudemaha.my.id/";
 
@@ -19,9 +19,10 @@ export const ChatbotApi = axios.create({
 })
 
 OfficialApi.interceptors.request.use((config) => {
-  const token = localStorage.getItem("auth-token");
+  const user = localStorage.getItem("@portfolio/user");
 
-  if (token) {
+  if (user) {
+    const token = JSON.parse(user).token;
     config.headers.authorization = token;
   }
 
@@ -32,10 +33,19 @@ OfficialApi.interceptors.response.use((response) => {
   const newToken = response.headers.authorization;
 
   if (newToken) {
-    localStorage.setItem("auth-token", newToken);
+    const user = localStorage.getItem('@portfolio/user');
+    let parsedUser: { token?: string } = {};
+
+    if (user) {
+      parsedUser = JSON.parse(user);
+    }
+
+    parsedUser.token = newToken;
+    localStorage.setItem('@portfolio/user', JSON.stringify(parsedUser));
   }
 
   return response;
 }, (error) => {
   return Promise.reject(error);
-})
+});
+

@@ -2,9 +2,12 @@ import { Avatar, Button, Flex, FormControl, FormLabel, Grid, GridItem, Input, St
 import { useState, useLayoutEffect } from 'react';
 import { ProfilePageProps } from '@/utils/interface/Profile';
 import { OfficialApi } from '@/utils/api';
+import Swal from 'sweetalert2';
+import { useRouter } from 'next/router';
 
 const ChangeProfile = ({ username, data }: { username: string, data: ProfilePageProps }) => {
   const Toast = useToast();
+  const router = useRouter();
 
   const [name, setName] = useState<string>('');
   const [education, setEducation] = useState<string>('');
@@ -54,8 +57,21 @@ const ChangeProfile = ({ username, data }: { username: string, data: ProfilePage
         });
       }
     } catch (error) {
-      console.log(error);
       const { response } = error as any;
+
+      if (response.status === 401) {
+        localStorage.removeItem('@portfolio/user');
+        Swal.fire({
+          title: "Oops...",
+          text: "Your session is expired, please login again",
+          icon: "error",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#3085d6",
+          allowOutsideClick: false
+        }).then(() => {
+          router.replace('/auth/login');
+        });
+      }
 
       if (response.status === 400) {
         return Toast({

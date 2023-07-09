@@ -23,7 +23,7 @@ const LinkParent = ({ path, name }: { path: string, name: string }) => {
 
 export default function SidebarNavigation() {
   return (
-    <Stack spacing={5}>
+    <Stack spacing={5} pos={'sticky'} top={'8rem'}>
       <Text fontWeight={'semibold'} color={useColorModeValue('gray.600', 'gray.400')}>Dashboard</Text>
       <Stack spacing={3}>
         <LinkParent path="/dashboard" name="Home" />

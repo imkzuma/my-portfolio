@@ -9,7 +9,6 @@ import Swal from "sweetalert2";
 
 import { DashboardLayout } from "@/layouts/DashboardLayout";
 
-import InputText from "@/components/forms/InputText";
 import InputTextArea from "@/components/forms/InputTextarea";
 import { OfficialApi } from "@/utils/api";
 import useAuth from "@/utils/hooks/useAuth";
@@ -65,7 +64,22 @@ export default function CreateBlog() {
       }
 
     } catch (error) {
-      console.log(error)
+      const { response } = error as any;
+      if (response.status === 401) {
+        localStorage.removeItem('@portfolio/user');
+
+        Swal.fire({
+          title: 'Error',
+          text: 'Your session has been expired',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            router.replace('/auth/login');
+          }
+        });
+      }
+
     } finally {
       setLoading(false);
     }

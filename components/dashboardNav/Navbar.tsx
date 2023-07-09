@@ -43,6 +43,11 @@ const MobileNav = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
         </DrawerHeader>
         <DrawerBody>
           <Stack spacing={5} py={8}>
+            <Text fontWeight={'semibold'} color={useColorModeValue('gray.600', 'gray.400')}>Page</Text>
+            <Stack spacing={3}>
+              <LinkParent path="/" name="Home Page" />
+            </Stack>
+            <Divider w={'70%'} />
             <Text fontWeight={'semibold'} color={useColorModeValue('gray.600', 'gray.400')}>Dashboard</Text>
             <Stack spacing={3}>
               <LinkParent path="/dashboard" name="Home" />
@@ -106,7 +111,7 @@ export default function Navbar() {
         pe={{ base: 5, lg: 10 }}
         spacing={{ base: 3, md: 7 }}
       >
-        <Text as="a" href="/">
+        <Text as="a" href="/" display={{ base: "none", md: "block" }}>
           Home
         </Text>
         <HStack

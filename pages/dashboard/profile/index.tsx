@@ -21,21 +21,25 @@ export default function ProfilePage() {
     if (!isAuth) {
       router.replace('/auth/login');
     }
-    const token = localStorage.getItem('auth-username');
-    if (token) {
-      setUsername(token);
+    const user = localStorage.getItem('@portfolio/user');
+    const usernameLocal = JSON.parse(user as string)?.username;
+
+    if (usernameLocal) {
+      setUsername(usernameLocal);
     }
 
     const getData = async () => {
       try {
-        const response = await OfficialApi.get(`/profile/${token}`);
+        const response = await OfficialApi.get(`/profile/${usernameLocal}`);
+
         if (response.status === 200) {
           setData(response.data.data);
           const { image } = response.data.data;
           setUrlImage(image ? image : '');
         }
       } catch (error) {
-        console.log(error);
+        const { response } = error as any;
+        console.log(response)
       }
     }
     getData();

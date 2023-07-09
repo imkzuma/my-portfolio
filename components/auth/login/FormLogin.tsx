@@ -29,9 +29,10 @@ export default function FormLogin() {
       });
 
       if (response.status === 200) {
-        localStorage.setItem('auth-token', response.headers.authorization);
-        localStorage.setItem('auth-username', response.data.data.username)
-        router.replace('/dashboard/');
+        const { data } = response.data;
+        const token = response.headers.authorization;
+        localStorage.setItem("@portfolio/user", JSON.stringify({ ...data, token }));
+        router.push('/dashboard/');
       }
 
     } catch (error) {
